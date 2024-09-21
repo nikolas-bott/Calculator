@@ -5,10 +5,9 @@ let input = "";
 const btn = document.querySelectorAll(".input-button");
 const para = document.querySelector("p");
 const container = document.querySelector(".container");
-container.appendChild(para);
-para.textContent = "ha";
-let prevResult;
-
+const calc = document.querySelector(".calculator-layout");
+para.textContent = "0";
+let prevResult = "0";
 let pressedEqual = false;
 
 btn.forEach(function(button){
@@ -28,10 +27,13 @@ btn.forEach(function(button){
             case "-": input +="-"; break;
             case "*": input +="*"; break;
             case "/": input +="/"; break;
+            case "AC": input = ""; break;
+            case "DEL": input = input.slice(0,-1); break;
             case "=": 
                 para.textContent = getCalculationInput(input);
                 prevResult = getCalculationInput(input);
                 pressedEqual = true;
+                input = getCalculationInput(input);
                 break;
         }
         if(!pressedEqual){
@@ -57,10 +59,11 @@ function divide(num1,num2){
     return Number(num1)/Number(num2);
 }
 
-function getCalculationInput(input){
+function getCalculationInput(input, first){
     let inputArray = input.split("");
     // console.log(inputArray);
-    let fullCalculation = [""];
+    let fullCalculation = [""]; 
+    
     let counter = 0;
 
     for(let i = 0;i < inputArray.length; i++){
@@ -76,7 +79,7 @@ function getCalculationInput(input){
             counter++;
         }
     }
-    console.log(fullCalculation)
+
     let forLoopLength = fullCalculation.length;
     if(fullCalculation.includes("*") || fullCalculation.includes("/")){
         for(let i = 0;i < forLoopLength; i++){
@@ -110,7 +113,6 @@ function getCalculationInput(input){
                  break;
          }
      }
-     console.log(fullCalculation+" full???!!!");
      return fullCalculation;
 }
 
