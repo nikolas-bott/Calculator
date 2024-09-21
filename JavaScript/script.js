@@ -1,4 +1,48 @@
 
+//
+let input = "";
+
+const btn = document.querySelectorAll(".input-button");
+const para = document.querySelector("p");
+const container = document.querySelector(".container");
+container.appendChild(para);
+para.textContent = "ha";
+let prevResult;
+
+let pressedEqual = false;
+
+btn.forEach(function(button){
+    button.addEventListener("click", function(e){
+        switch(button.id){
+            case "0": input +="0"; break;
+            case "1": input +="1"; break;
+            case "2": input +="2"; break;
+            case "3": input +="3"; break;
+            case "4": input +="4"; break; 
+            case "5": input +="5"; break;
+            case "6": input +="6"; break;
+            case "7": input +="7"; break;
+            case "8": input +="8"; break;
+            case "9": input +="9"; break;
+            case "+": input +="+"; break;
+            case "-": input +="-"; break;
+            case "*": input +="*"; break;
+            case "/": input +="/"; break;
+            case "=": 
+                para.textContent = getCalculationInput(input);
+                prevResult = getCalculationInput(input);
+                pressedEqual = true;
+                break;
+        }
+        if(!pressedEqual){
+            console.log("hmm")
+            para.textContent = input;
+        }
+        pressedEqual = false;
+    })
+})
+
+//Logic
 function add(num1,num2){
     // console.log(num1+" ADD "+num2);
     return Number(num1)+Number(num2);
@@ -18,7 +62,6 @@ function getCalculationInput(input){
     // console.log(inputArray);
     let fullCalculation = [""];
     let counter = 0;
-    let operator = [];
 
     for(let i = 0;i < inputArray.length; i++){
         if(isNumeric(inputArray[i])){
@@ -30,45 +73,32 @@ function getCalculationInput(input){
         }else{
             counter++;
             fullCalculation[counter] = inputArray[i];
-            // console.log(fullCalculation[1]);
-            operator.push(inputArray[i]);
             counter++;
         }
     }
     console.log(fullCalculation)
-    // console.log(operator);
     let forLoopLength = fullCalculation.length;
     if(fullCalculation.includes("*") || fullCalculation.includes("/")){
         for(let i = 0;i < forLoopLength; i++){
-            // console.log("---for---"+fullCalculation[i]);
-            // console.log("---for----"+fullCalculation.length+"---"+fullCalculation[i]);
-            // console.log("----..."+fullCalculation+"----...");
             switch(fullCalculation[i]){
                 case "/":
-                    // console.log("---/---");
                     let tempSolD = divide(fullCalculation[i-1],fullCalculation[i+1]);
                     fullCalculation.splice(i-1,3,tempSolD);
-                    // console.log(fullCalculation+"////")
                     i = 0;
                     break;
                 case "*":
-                    // console.log("---*---");
                     let tempSolM = multiply(fullCalculation[i-1],fullCalculation[i+1]);
                     fullCalculation.splice(i-1,3,tempSolM);
                     i = 0;
-                    // console.log(fullCalculation+"***")
                     break;
                 default:
             }
             
+        }
     }
-}
-    
      for(let i = 0;i < fullCalculation.length; i++){
-         // console.log("---for---"+fullCalculation[i]);
          switch(fullCalculation[i]){
              case "+":
-                 // console.log("---index---"+i);
                  let tempSolA = add(fullCalculation[i-1],fullCalculation[i+1]);
                  fullCalculation.splice(i-1,3,tempSolA);
                  i = 0;
@@ -84,9 +114,9 @@ function getCalculationInput(input){
      return fullCalculation;
 }
 
-let equation = prompt("What do you wanna calculate?");
+// let equation = prompt("What do you wanna calculate?");
 
-alert(getCalculationInput(equation));
+// alert(getCalculationInput("5/0*2"));
 
 
 //https://stackoverflow.com/questions/175739/how-can-i-check-if-a-string-is-a-valid-number
