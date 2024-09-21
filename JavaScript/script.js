@@ -37,25 +37,56 @@ function getCalculationInput(input){
     }
     console.log(fullCalculation)
     // console.log(operator);
-    for(let i = 0;i < fullCalculation.length; i++){
-        // console.log("---for---"+fullCalculation[i]);
-        switch(fullCalculation[i]){
-            case "+":
-                // console.log("---index---"+i);
-                console.log(add(fullCalculation[i-1],fullCalculation[i+1])+"+++");
-            case "-":
-                console.log(subtract(fullCalculation[i-1],fullCalculation[i+1])+"---");
-            case "/":
-                console.log(divide(fullCalculation[i-1],fullCalculation[i+1])+"///");
-            case "*":
-                console.log(multiply(fullCalculation[i-1],fullCalculation[i+1])+"***");
-            default:
-        }
+    let forLoopLength = fullCalculation.length;
+    if(fullCalculation.includes("*") || fullCalculation.includes("/")){
+        for(let i = 0;i < forLoopLength; i++){
+            // console.log("---for---"+fullCalculation[i]);
+            // console.log("---for----"+fullCalculation.length+"---"+fullCalculation[i]);
+            // console.log("----..."+fullCalculation+"----...");
+            switch(fullCalculation[i]){
+                case "/":
+                    // console.log("---/---");
+                    let tempSolD = divide(fullCalculation[i-1],fullCalculation[i+1]);
+                    fullCalculation.splice(i-1,3,tempSolD);
+                    // console.log(fullCalculation+"////")
+                    i = 0;
+                    break;
+                case "*":
+                    // console.log("---*---");
+                    let tempSolM = multiply(fullCalculation[i-1],fullCalculation[i+1]);
+                    fullCalculation.splice(i-1,3,tempSolM);
+                    i = 0;
+                    // console.log(fullCalculation+"***")
+                    break;
+                default:
+            }
+            
     }
 }
-getCalculationInput("42*423+32*432+123532*23/312");
+    
+     for(let i = 0;i < fullCalculation.length; i++){
+         // console.log("---for---"+fullCalculation[i]);
+         switch(fullCalculation[i]){
+             case "+":
+                 // console.log("---index---"+i);
+                 let tempSolA = add(fullCalculation[i-1],fullCalculation[i+1]);
+                 fullCalculation.splice(i-1,3,tempSolA);
+                 i = 0;
+                 break;
+             case "-":
+                 let tempSolS = subtract(fullCalculation[i-1],fullCalculation[i+1]);
+                 fullCalculation.splice(i-1,3,tempSolS);
+                 i = 0;
+                 break;
+         }
+     }
+     console.log(fullCalculation+" full???!!!");
+     return fullCalculation;
+}
 
 let equation = prompt("What do you wanna calculate?");
+
+alert(getCalculationInput(equation));
 
 
 //https://stackoverflow.com/questions/175739/how-can-i-check-if-a-string-is-a-valid-number
