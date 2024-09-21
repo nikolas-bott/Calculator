@@ -27,7 +27,7 @@ btn.forEach(function(button){
             case "-": input +="-"; break;
             case "*": input +="*"; break;
             case "/": input +="/"; break;
-            case "AC": input = ""; break;
+            case "AC": input = "0"; break;
             case "DEL": input = input.slice(0,-1); break;
             case "=": 
                 para.textContent = getCalculationInput(input);
