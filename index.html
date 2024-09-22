@@ -12,37 +12,46 @@
         <div class="calculator-layout">
             <div class="para-container">
                 <p class="display-calculation"></p>
+                <div class="warning-container">
+                    <div class="alert-icon">X</div>
+                    <div class="alert-content">
+                        <p class="warning"><div id="error">Error:</div>&nbsp;Calculation too long</p>
+                    </div>
+                </div>
             </div>
-
+            
             <div class="first line">
                 <button class="input-button ac" id="AC">Clear</button>
                 <button class="input-button ac" id="DEL">Delete</button>
+                <button class="input-button operator divide" id="/">/</button>
             </div>
 
             <div class="second line">
                 <button class="input-button" id="7">7</button>
                 <button class="input-button" id="8">8</button>
                 <button class="input-button" id="9">9</button>
-                <button class="input-button operator" id="/">/</button>
+                <button class="input-button operator" id="*">*</button>
+                
             </div>
             
             <div class="third line">
                 <button class="input-button" id="4">4</button>
                 <button class="input-button" id="5">5</button>
                 <button class="input-button" id="6">6</button>
-                <button class="input-button operator" id="*">*</button>
+                <button class="input-button operator" id="-">-</button>
             </div>
 
             <div class="fourth line">
                 <button class="input-button" id="1">1</button>
                 <button class="input-button" id="2">2</button>
                 <button class="input-button" id="3">3</button>
-                <button class="input-button operator" id="-">-</button>
+                <button class="input-button operator" id="+">+</button>
             </div>
 
             <div class="fifth line">
-                <button class="input-button" id="0">0</button>
-                <button class="input-button operator" id="+">+</button>
+                
+                <button class="input-button zero" id="0">0</button>
+                <button class="input-button" id=".">.</button>
                 <button class="input-button operator" id="=">=</button>
 
             </div>

@@ -3,44 +3,75 @@
 let input = "";
 
 const btn = document.querySelectorAll(".input-button");
-const para = document.querySelector("p");
+const para = document.querySelector(".display-calculation");
+const warningPara = document.querySelector(".warning")
 const container = document.querySelector(".container");
 const calc = document.querySelector(".calculator-layout");
+const warnCon = document.querySelector(".warning-container");
+const audio = new Audio();
+const errorAudio = new Audio();
+errorAudio.src = "./audio/error-too-many.mp3"
+audio.src = "./audio/click-button.mp3"
 para.textContent = "0";
 let prevResult = "0";
 let pressedEqual = false;
+warnCon.style.visibility="hidden";
 
 btn.forEach(function(button){
     button.addEventListener("click", function(e){
-        switch(button.id){
-            case "0": input +="0"; break;
-            case "1": input +="1"; break;
-            case "2": input +="2"; break;
-            case "3": input +="3"; break;
-            case "4": input +="4"; break; 
-            case "5": input +="5"; break;
-            case "6": input +="6"; break;
-            case "7": input +="7"; break;
-            case "8": input +="8"; break;
-            case "9": input +="9"; break;
-            case "+": input +="+"; break;
-            case "-": input +="-"; break;
-            case "*": input +="*"; break;
-            case "/": input +="/"; break;
-            case "AC": input = "0"; break;
-            case "DEL": input = input.slice(0,-1); break;
-            case "=": 
-                para.textContent = getCalculationInput(input);
-                prevResult = getCalculationInput(input);
-                pressedEqual = true;
-                input = getCalculationInput(input);
-                break;
+        audio.play();
+        if(para.textContent.length > 27){
+            errorAudio.play();
+            warnCon.style.visibility="visible";
+            switch(button.id){
+                case "AC": input = "0"; break;
+                case "DEL": input = input.slice(0,-1); break;
+                case "=": 
+                    para.textContent = getCalculationInput(input);
+                    prevResult = getCalculationInput(input);
+                    pressedEqual = true;
+                    input = getCalculationInput(input);
+                    break;
+            }
+            if(!pressedEqual){
+                console.log("hmm")
+                para.textContent = input;
+            }
+            pressedEqual = false; 
+        }else{
+            warnCon.style.visibility="hidden";
+            switch(button.id){
+                case "0": input +="0"; break;
+                case "1": input +="1"; break;
+                case "2": input +="2"; break;
+                case "3": input +="3"; break;
+                case "4": input +="4"; break; 
+                case "5": input +="5"; break;
+                case "6": input +="6"; break;
+                case "7": input +="7"; break;
+                case "8": input +="8"; break;
+                case "9": input +="9"; break;
+                case "+": input +="+"; break;
+                case "-": input +="-"; break;
+                case "*": input +="*"; break;
+                case "/": input +="/"; break;
+                case "AC": input = "0"; break;
+                case ".": input += "."; break;
+                case "DEL": input = input.slice(0,-1); break;
+                case "=": 
+                    para.textContent = getCalculationInput(input);
+                    prevResult = getCalculationInput(input);
+                    pressedEqual = true;
+                    input = getCalculationInput(input);
+                    break;
+            }
+            if(!pressedEqual){
+                console.log("hmm")
+                para.textContent = input;
+            }
+            pressedEqual = false;
         }
-        if(!pressedEqual){
-            console.log("hmm")
-            para.textContent = input;
-        }
-        pressedEqual = false;
+        
     })
 })
 
@@ -67,7 +98,7 @@ function getCalculationInput(input, first){
     let counter = 0;
 
     for(let i = 0;i < inputArray.length; i++){
-        if(isNumeric(inputArray[i])){
+        if(isNumeric(inputArray[i]) || inputArray[i] == "."){
             if(fullCalculation[counter] == undefined){
                 fullCalculation[counter] = inputArray[i]+""
             }else{
@@ -113,7 +144,7 @@ function getCalculationInput(input, first){
                  break;
          }
      }
-     return fullCalculation;
+     return Math.round((Number(fullCalculation) + Number.EPSILON) * 100) / 100 //how to round - https://stackoverflow.com/questions/11832914/how-to-round-to-at-most-2-decimal-places-if-necessary
 }
 
 // let equation = prompt("What do you wanna calculate?");
